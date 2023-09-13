@@ -1,4 +1,4 @@
-// 242. Anagram
+// // 242. Anagram
 const isAnagram = (x, y) => {
     const wordInputedX = x.toLowerCase().split("").sort().join("");
     const wordInputedY = y.toLowerCase().split("").sort().join("");
@@ -9,63 +9,56 @@ const isAnagram = (x, y) => {
 console.log(isAnagram("AnAgRam", "ganaraM"));
 
 // 26. Remove Duplicates from Sorted Array
-const removeDuplicates = () => {
-    let nums = [1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 9];
-    let removedDuplicate = [];
-    for (let i = 0; i < nums.length; i++) {
-        if (nums[i] === nums[i + 1]) {
-        } else {
-            removedDuplicate += +nums[i];
+const removeDuplicates = (nums) => {
+    let i = 0;
+    for (let j = 1; j < nums.length; j++) {
+        if (nums[i] !== nums[j]) {
+            i++;
+            nums[i] = nums[j];
         }
     }
-    const arrayNums = removedDuplicate.split("");
-    const convertedString = arrayNums.map((str) => parseInt(str, 10));
-    const arrayLength = arrayNums.length;
-    return convertedString;
+    return i + 1;
 };
 
-console.log(removeDuplicates());
+console.log(removeDuplicates([1, 2, 2]));
 
-// 350. Intersection of Two Arrays II
+// // 350. Intersection of Two Arrays II
 const intersect = (nums1, nums2) => {
-    let sortedNum1 = nums1.sort();
-    let sortedNum2 = nums2.sort();
+    let sortedNum1 = nums1.sort((a, b) => a - b);
+    let sortedNum2 = nums2.sort((a, b) => a - b);
 
     let intersect = [];
-    for (let i = 0; i < sortedNum2.length; i++) {
-        if (sortedNum1[i] !== sortedNum2[i]) {
-            for (let j = 0; j < sortedNum1.length; j++) {
-                if (sortedNum1[j] === sortedNum2[i]) {
-                    intersect.push(sortedNum2[i]);
-                }
-            }
+    let i = 0;
+    let j = 0;
+    while (i < sortedNum1.length && j < sortedNum2.length) {
+        if (sortedNum1[i] < sortedNum2[j]) {
+            i++;
+        } else if (sortedNum1[i] > sortedNum2[j]) {
+            j++;
         } else {
-            intersect.push(sortedNum2[i]);
+            intersect.push(sortedNum1[i]);
+            i++;
+            j++;
         }
     }
-    sortedArray = intersect.sort(function (a, b) {
-        return a - b;
-    });
-    return sortedArray;
+
+    return intersect;
 };
 
-console.log(
-    intersect(
-        [1, 2, 2, 3, 4, 10, 2, 4, 9, 8, 7, 6, 5, 4],
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    )
-);
+console.log(intersect([4, 9, 5], [9, 4, 9, 8, 4]));
 
-// 1. Two Sum
+// // 1. Two Sum
 const twoSum = (nums, target) => {
+    storeNumber = {};
+
     for (let i = 0; i < nums.length; i++) {
-        for (j = 1; j < nums.length; j++) {
-            if (nums[i] + nums[j] === target) {
-                return [nums[i], nums[j]];
-            }
+        difference = target - nums[i];
+        if (difference in storeNumber) {
+            return [storeNumber[difference], i];
         }
+        storeNumber[nums[i]] = i;
     }
-    return "No equal value";
+    return "No equal values";
 };
 
-console.log(twoSum([2, 7, 11, 15], 18));
+console.log(twoSum([1, 2, 3, 4, 5, 6], 10));
